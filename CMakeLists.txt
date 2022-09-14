@@ -43,10 +43,30 @@ if(WIN32) # Dll's into bin
     set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 endif()
 
-find_package(Qt5 5.14 REQUIRED Core Network)
+find_package(Qt5 REQUIRED Core Network)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBGIT2 "libgit2>=1.0" REQUIRED IMPORTED_TARGET)
+#find_package(PkgConfig REQUIRED)
+#pkg_check_modules(LIBGIT2 "libgit2>=1.0" REQUIRED IMPORTED_TARGET)
+
+if(WIN32) 
+	set(out_Includes
+	lib/git2)
+
+  set(out_LIBS
+	lib)
+
+  set(out_Links
+	git2)
+else()
+endif()
+
+
+message(STATUS "${PROJECT_NAME} link path ${out_LIBS}")  
+message(STATUS "${PROJECT_NAME} link libs ${out_Links}")
+
+include_directories(${out_Includes} .)
+LINK_DIRECTORIES(${out_LIBS})
+
 
 file(STRINGS "qgit2.h" QGIT2_HEADER REGEX "^#define LIBQGIT2_VERSION \"[^\"]*\"$")
 string(REGEX REPLACE "^.*LIBQGIT2_VERSION \"([0-9]+).*$" "\\1" LIBQGIT2_VERSION_MAJOR "${QGIT2_HEADER}")
@@ -93,7 +113,7 @@ message(STATUS)
 # Compile and link libqgit2
 add_definitions(-DMAKE_LIBQGIT2_LIB)
 add_library(qgit2 ${SRC} ${QGIT2_HEADERS} ${QGIT2_PRIVATE_HEADERS})
-target_link_libraries(qgit2 PkgConfig::LIBGIT2 Qt5::Core Qt5::Network)
+target_link_libraries(qgit2 ${out_Links} Qt5::Core Qt5::Network)
 set_target_properties(qgit2 PROPERTIES VERSION ${LIBQGIT2_VERSION_STRING})
 set_target_properties(qgit2 PROPERTIES SOVERSION ${LIBQGIT2_SOVERSION})
 set_target_properties(qgit2 PROPERTIES AUTOMOC ON)
