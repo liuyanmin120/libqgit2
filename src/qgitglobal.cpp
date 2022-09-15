@@ -46,7 +46,7 @@ bool initLibQGit2() {
 bool shutdownLibQGit2() {
     bool ret = false;
 
-    if (LibInitialized.loadRelaxed() > Uninitialized) {
+    if (LibInitialized > Uninitialized) {
         if (LibInitialized.fetchAndAddRelaxed(-Initialized) == Initialized) {
             git_libgit2_shutdown();
             ret = true;

@@ -86,7 +86,7 @@ namespace LibQGit2
     private:
         class Private;
         QSharedPointer<Private> d_ptr;
-        Q_DECLARE_PRIVATE()
+        //Q_DECLARE_PRIVATE()
     };
 
     Q_DECLARE_OPERATORS_FOR_FLAGS(CheckoutOptions::Flags)
