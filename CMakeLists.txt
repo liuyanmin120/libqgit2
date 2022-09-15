@@ -32,6 +32,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(libqgit2)
 
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "D:/Qt/Qt5.9.8/5.9.8/msvc2015_64")
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
